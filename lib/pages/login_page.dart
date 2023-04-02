@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodshoel/pages/home_page.dart';
-import 'package:foodshoel/pages/password_recovery_page.dart';
-import 'package:foodshoel/pages/signup_page.dart';
+import '../pages/password_recovery_page.dart';
+import '../pages/signup_page.dart';
 import '../constants/infography.dart';
+import '../constants/icon_size.dart';
 
 
 class Login extends StatefulWidget {
@@ -17,7 +17,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: _buildAppBar(context),
         body: Container(
             color: Colors.white,
             child: ListView(
@@ -26,43 +25,44 @@ class _LoginState extends State<Login> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (BuildContext context, _, __){
+                                return const Login(); // This navigates to the PasswordRecovery screen when clicked
+                              },
+                              transitionsBuilder: (___, Animation<double> animation,  ____, Widget child){
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: RotationTransition(
+                                    turns: Tween(begin: 0.5, end: 1.0).animate(animation),
+                                    child: child,
+                                  ),
+                                );
+                              }
+                          ));
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          size: IconSizeTwo,
+                        ),
+                      ),
+                    ),
                     _loginPageHeroImage(context),
-                    _loginPageInfoGraphy(),
+                    _loginPageInfography(),
                     _loginPageInputFields(context),
                   ],
                 ),
               ],
-            )));
+            )
+        )
+    );
   }
 }
 
-AppBar _buildAppBar(context) {
-  return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0.0,
-      title: Container(
-        width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.only(left: 10, top: 20),
-        child: Row(
-          children: const [
-            Icon(
-              Icons.arrow_back_ios,
-              size: IconSizeThree,
-              color: Colors.black26,
-            ),
-            Text(
-              'Back',
-              style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: fontHeaderThree,
-                  color: Colors.black26),
-            )
-          ],
-        ),
-      ));
-}
-
-Container _loginPageInfoGraphy() {
+Container _loginPageInfography() {
   return Container(
       padding: const EdgeInsets.only(left: 30),
       child: Column(
@@ -70,30 +70,29 @@ Container _loginPageInfoGraphy() {
         children: const [
           SizedBox(
             child: Text(
+              'Welcome Back',
+              style: TextStyle(
+                  fontSize: fontHeaderThree,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black,
+                  fontFamily: 'Poppins'),
+            ),
+          ),
+          SizedBox(height: 10,),
+          SizedBox(
+            child: Text(
               'Proceed with your',
               style: TextStyle(
                 fontFamily: 'Poppins',
-                fontSize: fontHeaderThree,
+                fontSize: fontHeaderFour,
                 fontWeight: FontWeight.w400,
                 color: Colors.grey,
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            child: Text(
-              'Login',
-              style: TextStyle(
-                  fontSize: fontHeaderOne,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                  fontFamily: 'Poppins'),
-            ),
-          )
         ],
-      ));
+      )
+  );
 }
 
 SizedBox _loginPageHeroImage(context) {
@@ -101,8 +100,8 @@ SizedBox _loginPageHeroImage(context) {
     width: MediaQuery.of(context).size.width,
     child: Image.asset(
       'assets/images/1.png',
-      width: 300,
-      height: 300,
+      width: 200,
+      height: 200,
     ),
   );
 }
@@ -169,10 +168,20 @@ Column _loginPageInputFields(context) {
           children: [
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                  return const PasswordRecovery();
-                })
-                );
+                Navigator.push(context, PageRouteBuilder(
+                    pageBuilder: (BuildContext context, _, __){
+                      return const PasswordRecoveryOptionSelection(); // This navigates to the PasswordRecovery screen when clicked
+                    },
+                    transitionsBuilder: (___, Animation<double> animation,  ____, Widget child){
+                      return FadeTransition(
+                        opacity: animation,
+                        child: RotationTransition(
+                          turns: Tween(begin: 0.5, end: 1.0).animate(animation),
+                          child: child,
+                        ),
+                      );
+                    }
+                ));
               },
               child: const Text(
                 'Forgot password?',
@@ -217,12 +226,21 @@ Column _loginPageInputFields(context) {
               ],
             ),
             const SizedBox(height: 5,),
-            InkWell(
+            GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (BuildContext context){
+                Navigator.push(context, PageRouteBuilder(
+                    pageBuilder: (BuildContext context, _, __){
                       return const Signup(); // This navigates to the signup screen when clicked
-                    }
+                    },
+                  transitionsBuilder: (___, Animation<double> animation,  ____, Widget child){
+                      return FadeTransition(
+                        opacity: animation,
+                        child: RotationTransition(
+                          turns: Tween(begin: 0.5, end: 1.0).animate(animation),
+                          child: child,
+                        ),
+                      );
+                  }
                 ));
               },
               child: const Text(
