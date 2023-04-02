@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../pages/password_recovery_page.dart';
+import '../pages/password_recovery_options_page.dart';
 import '../pages/signup_page.dart';
 import '../constants/infography.dart';
 import '../constants/icon_size.dart';
